@@ -72,6 +72,13 @@ const pluginSettings = definePluginSettings({
         stickToMarkers: false,
         default: 70,
     },
+    maxQueuedEvents: {
+        type: OptionType.SLIDER,
+        description: "The maximum number of queued vibrations",
+        markers: makeRange(0, 100, 5),
+        stickToMarkers: true,
+        default: 100,
+    },
     targetWords: {
         type: OptionType.STRING,
         description: "Comma-separated list of words to use as targets (used for detecting things when you was not mentioned)",
@@ -621,6 +628,9 @@ async function checkDeviceBattery() {
 }
 
 async function addToVibrateQueue(data: VibrateEvent) {
+    if (vibrateQueue.length > pluginSettings.store.maxQueuedEvents)
+        return;
+
     vibrateQueue.push(data);
     if (vibrateQueue.length === 1) {
         processVibrateQueue();
