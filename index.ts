@@ -74,7 +74,7 @@ const pluginSettings = definePluginSettings({
     },
     maxQueuedEvents: {
         type: OptionType.SLIDER,
-        description: "The maximum number of queued vibrations",
+        description: "Maximum number of queued vibrations",
         markers: makeRange(0, 100, 5),
         stickToMarkers: true,
         default: 100,
